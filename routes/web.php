@@ -14,6 +14,14 @@ use App\Http\Controllers\CrudController;
 |
 */
 
+Route::middleware([auth::class])->group(function(){
+    Route::get('list',[CrudController::class,'list']);
+    Route::view('add','add');
+    Route::get('delete/{id}',[CrudController::class,'delete']);
+    Route::get('edit/{id}',[CrudController::class,'edit']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -21,18 +29,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('list',[CrudController::class,'list']);
-//add user
-Route::view('add','add');
+
+
+
+
 Route::post('add',[CrudController::class,'add']);
 //delte user
-Route::get('delete/{id}',[CrudController::class,'delete']);
+
 //update user
 // Route::view('update','update');
 Route::post('update',[CrudController::class,'update']);
 //to find which id should be upated
-Route::get('edit/{id}',[CrudController::class,'edit']);
+
+
+
 
 

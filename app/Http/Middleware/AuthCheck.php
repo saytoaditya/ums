@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
-class LoginCheck
+class AuthCheck
 {
     /**
      * Handle an incoming request.
@@ -15,17 +16,14 @@ class LoginCheck
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $guard = null)
+    public function handle(Request $request, Closure $next)
     {
-        
-        // if(Auth::user())
-        // {
-        //     return "hello";
-        // }
-        // else {
-        //     return route('login');
-        // }
-        
+        $user = User::where(['id' => Auth::id()])->get();
+        if($user){
+            return "ohk";
+        }else{
+            return  "no";
+        }
         return $next($request);
     }
 }
